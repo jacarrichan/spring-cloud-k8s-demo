@@ -1,0 +1,13 @@
+server:
+  port: ${PORT:8761}
+
+spring:
+  application:
+    name: registry
+
+eureka:
+  client:
+    registerWithEureka: ${REGISTRY_SERVICE_HA:true}
+    fetchRegistry: ${REGISTRY_SERVICE_HA:true}
+    serviceUrl:
+      defaultZone: ${REGISTRY_SERVICE_URL:http://localhost:8761/eureka}

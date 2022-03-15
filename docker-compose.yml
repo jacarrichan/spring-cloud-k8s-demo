@@ -1,0 +1,62 @@
+version: '2.2'
+
+services:
+  registry-0:
+    image: jacarrichan/cloud-registry:1.2.0
+    hostname: registry-0
+    environment:
+      PORT: 8761
+      REGISTRY_SERVICE_HA: "true"
+      REGISTRY_SERVICE_URL: http://registry-0:8761/eureka,http://registry-1:8761/eureka
+    expose:
+      - 8761
+    ports:
+      - 8761:8761
+
+  registry-1:
+    image: jacarrichan/cloud-registry:1.2.0
+    hostname: registry-1
+    environment:
+      PORT: 8761
+      REGISTRY_SERVICE_HA: "true"
+      REGISTRY_SERVICE_URL: http://registry-0:8761/eureka,http://registry-1:8761/eureka
+    expose:
+      - 8761
+
+  config:
+    image: jacarrichan/cloud-config:1.2.0
+    scale: 2
+    environment:
+      PORT: 8888
+      REGISTRY_SERVICE_URL: http://registry-0:8761/eureka,http://registry-1:8761/eureka
+    expose:
+      - 8888
+
+  gateway:
+    image: jacarrichan/cloud-gateway:1.2.0
+    environment:
+      PORT: 8080
+      REGISTRY_SERVICE_URL: http://registry-0:8761/eureka,http://registry-1:8761/eureka
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+
+  service-a:
+    image: jacarrichan/cloud-service-a:1.2.0
+    scale: 2
+    environment:
+      PORT: 8080
+      REGISTRY_SERVICE_URL: http://registry-0:8761/eureka,http://registry-1:8761/eureka
+    expose:
+      - 8080
+
+  service-b:
+    image: jacarrichan/cloud-service-b:1.2.0
+    scale: 2
+    environment:
+      PORT: 8080
+      REGISTRY_SERVICE_URL: http://registry-0:8761/eureka,http://registry-1:8761/eureka
+    expose:
+      - 8080
+

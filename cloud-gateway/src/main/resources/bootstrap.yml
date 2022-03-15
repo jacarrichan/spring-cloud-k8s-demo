@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    config:
+      failFast: true
+      discovery:
+        enabled: true
+        serviceId: config
+      retry:
+        maxAttempts: 300
+
+eureka:
+  fetch-registry: true
+  register-with-eureka: true
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: ${REGISTRY_SERVICE_URL:http://localhost:8761/eureka}

@@ -1,0 +1,22 @@
+eureka:
+  client:
+    enabled: false
+
+spring:
+  cloud:
+    config:
+      enabled: false
+      discovery:
+        enabled: false
+logging:
+  level:
+    root: debug
+    org:
+      apache:
+        tomcat: WARN
+      springframework:
+        boot:
+          autoconfigure:
+            logging:
+              AutoConfigurationReportLoggingInitializer: debug
+      hibernate: DEBUG
