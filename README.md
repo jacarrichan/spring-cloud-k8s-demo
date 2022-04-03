@@ -16,6 +16,10 @@ An example for learning Spring Cloud.
 - Maven 3.3.9+
 - Docker 1.12.0+
 
+###   Compile and  Build
+> mvn  clean  package
+
+
 #### Run in docker-compose
 Make sure the port 8080 and 8761 is available, and the docker daemon can use 8G+ memory.
 ```
@@ -48,6 +52,7 @@ $ kubectl create -f k8s
 
 To verify if the services are working, repeat the following commands for several times:
 ```
+$ curl http://localhost:30000/b/sysinfo
 $ curl $(minikube service gateway --url)/a/hello?name=jacarrichan
 $ curl $(minikube service gateway --url)/b/hello?name=jacarrichan
 ```
