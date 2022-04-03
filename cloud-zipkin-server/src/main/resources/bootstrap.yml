@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: zipkin-server
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: ${PORT:9411}
+eureka:
+  fetch-registry: true
+  register-with-eureka: true
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: ${REGISTRY_SERVICE_URL:http://localhost:28761/eureka}
+
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false

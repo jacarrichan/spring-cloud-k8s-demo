@@ -21,6 +21,7 @@
         <module>cloud-gateway</module>
         <module>cloud-service-a</module>
         <module>cloud-service-b</module>
+        <module>cloud-zipkin-server</module>
     </modules>
 
     <properties>
