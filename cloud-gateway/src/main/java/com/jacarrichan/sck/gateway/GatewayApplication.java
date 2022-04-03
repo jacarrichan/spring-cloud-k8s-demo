@@ -1,22 +1,22 @@
-package com.jacarrichan.sck.config;
+package com.jacarrichan.sck.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.config.server.EnableConfigServer;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 /**
- * Config server.
+ * Zuul server.
  *
- * @author jacarrichan 2017/06/02
+ * @author jacarrichan 2017/06/12
  */
 @SpringBootApplication
-@EnableConfigServer
 @EnableDiscoveryClient
-public class Application {
+@EnableZuulProxy
+public class GatewayApplication {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(GatewayApplication.class, args);
     }
 }
