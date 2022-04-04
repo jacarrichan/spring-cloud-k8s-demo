@@ -5,7 +5,7 @@ spring:
     allow-bean-definition-overriding: true
 
 server:
-  port: ${PORT:9411}
+  port: ${PORT:9422}
 eureka:
   fetch-registry: true
   register-with-eureka: true

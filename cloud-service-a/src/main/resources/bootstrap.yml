@@ -9,6 +9,8 @@ spring:
         serviceId: config
       retry:
         maxAttempts: 300
+  zipkin:
+    base-url: ${ZIPKIN_SERVICE_URL:http://localhost:9422}
 
 eureka:
   fetch-registry: true

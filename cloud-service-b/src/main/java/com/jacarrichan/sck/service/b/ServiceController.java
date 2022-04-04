@@ -1,5 +1,6 @@
 package com.jacarrichan.sck.service.b;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author jacarrichan 2017/06/06
  */
+@Slf4j
 @RestController
 @RequestMapping("/b")
 public class ServiceController {
@@ -62,15 +64,18 @@ public class ServiceController {
 
     @GetMapping("/sysinfo")
     public Map<String, Object> sysinfo() {
+        log.info("{}", servletRequest);
         Map<String, Object> maps = new HashMap<>(8);
         maps.put("system", System.getenv());
         maps.put("httpRequestHeader", getHeadersInfo(servletRequest));
         return maps;
     }
 
-    //get request headers
+    /**
+     * get request headers
+     */
     private Map<String, String> getHeadersInfo(HttpServletRequest request) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(8);
         Enumeration headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String key = (String) headerNames.nextElement();

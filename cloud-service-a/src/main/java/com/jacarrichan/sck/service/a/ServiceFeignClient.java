@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+
 /**
  * Call a service via netflix feign.
  *
@@ -16,11 +18,19 @@ public interface ServiceFeignClient {
     @GetMapping("/unstable")
     String unstable(@RequestParam("name") String name);
 
+    @GetMapping("/sysinfo")
+    Map<String, Object> sysinfo();
+
     @Component
     class Fallback implements ServiceFeignClient {
         @Override
         public String unstable(String name) {
             return String.format("[FALLBACK] '%s' called 'service-b' /unstable\n", name);
+        }
+
+        @Override
+        public Map<String, Object> sysinfo() {
+            return null;
         }
     }
 }

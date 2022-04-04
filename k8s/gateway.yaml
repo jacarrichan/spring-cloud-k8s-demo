@@ -36,6 +36,8 @@ spec:
           value: "8080"
         - name: REGISTRY_SERVICE_URL
           value: "http://registry-0.registry-headless.default.svc.cluster.local:8761/eureka,http://registry-1.registry-headless.default.svc.cluster.local:8761/eureka"
+        - name: ZIPKIN_SERVICE_URL
+          value: "http://zipkin-server:9422"
         ports:
         - name: http
           containerPort: 8080

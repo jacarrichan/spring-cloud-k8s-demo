@@ -8,8 +8,8 @@ spec:
   type: ClusterIP
   clusterIP: None
   ports:
-  - name: http
-    port: 8761
+    - name: http
+      port: 8761
   selector:
     app: registry
 
@@ -23,9 +23,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - name: http
-    port: 8761
-    nodePort: 30001
+    - name: http
+      port: 8761
+      nodePort: 30001
   selector:
     app: registry
 
@@ -46,16 +46,18 @@ spec:
         app: registry
     spec:
       containers:
-      - name: registry
-        image: jacarrichan/cloud-registry:1.2.0
-        env:
-        - name: PORT
-          value: "8761"
-        - name: REGISTRY_SERVICE_URL
-          value: "http://registry-0.registry-headless.default.svc.cluster.local:8761/eureka,http://registry-1.registry-headless.default.svc.cluster.local:8761/eureka"
-        - name: REGISTRY_SERVICE_HA
-          value: "true"
-        ports:
-        - name: http
-          containerPort: 8761
+        - name: registry
+          image: jacarrichan/cloud-registry:1.2.0
+          env:
+            - name: PORT
+              value: "8761"
+            - name: REGISTRY_SERVICE_URL
+              value: "http://registry-0.registry-headless.default.svc.cluster.local:8761/eureka,http://registry-1.registry-headless.default.svc.cluster.local:8761/eureka"
+            - name: REGISTRY_SERVICE_HA
+              value: "true"
+            - name: ZIPKIN_SERVICE_URL
+              value: "http://zipkin-server:9422"
+          ports:
+            - name: http
+              containerPort: 8761
 
