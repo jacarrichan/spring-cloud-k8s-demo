@@ -37,28 +37,28 @@ kubectl  create -f kafka.yaml
 ```
 部署在kafka这个namesapce里面。
 测试zk：
-kubectl exec  -n kafka -it zk-0 -- zkServer.sh status
-kubectl exec  -n kafka -it zk-0 -- zkCli.sh create /hello world
+kubectl exec  v1 -it zk-0 -- zkServer.sh status
+kubectl exec  v1 -it zk-0 -- zkCli.sh create /hello world
 kubectl delete -f zk.yaml 
 kubectl apply -f zk.yaml
-kubectl exec  -n kafka -it zk-0 -- zkCli.sh get /hello
+kubectl exec  v1 -it zk-0 -- zkCli.sh get /hello
 
 测试kafka：
-kubectl exec  -n kafka -it kafka-0 -- bash 
+kubectl exec  v1 -it kafka-0 -- bash 
 
 >kafka-topics.sh --create \
---topic test \
---zookeeper zk-0.zk-hs.kafka.svc.cluster.local:2181,zk-1.zk-hs.kafka.svc.cluster.local:2181,zk-2.zk-hs.kafka.svc.cluster.local:2181 \
---partitions 3 \
---replication-factor 2
+--topic logger-channel \
+--zookeeper zk-0.zk-hs.default.svc.cluster.local:2181 \
+--partitions 1 \
+--replication-factor 1
 
->kafka-topics.sh --list --zookeeper zk-0.zk-hs.kafka.svc.cluster.local:2181,zk-1.zk-hs.kafka.svc.cluster.local:2181,zk-2.zk-hs.kafka.svc.cluster.local:2181
+>kafka-topics.sh --list --zookeeper zk-0.zk-hs.default.svc.cluster.local:2181
 
->kafka-console-consumer.sh --topic test --bootstrap-server localhost:9092
+>kafka-console-consumer.sh --topic logger-channel --bootstrap-server localhost:9092
 
 kubectl exec -it kafka-1 -- bash
 
->kafka-console-producer.sh --topic test --broker-list localhost:9092
+>kafka-console-producer.sh --topic logger-channel --broker-list localhost:9092
 随便输入一些东西：hello 
 
 此时会在kafka-0的那边启动的kafka-console-consumer.sh会有相应的输出

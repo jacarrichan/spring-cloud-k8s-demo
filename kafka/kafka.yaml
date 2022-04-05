@@ -3,7 +3,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kafka-svc
-  namespace: kafka
   labels:
     app: kafka
 spec:
@@ -18,7 +17,6 @@ apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   name: kafka-pdb
-  namespace: kafka
 spec:
   selector:
     matchLabels:
@@ -29,7 +27,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: kafka
-  namespace: kafka
 spec:
   selector:
      matchLabels:
@@ -93,7 +90,7 @@ spec:
         - -c
         - "exec kafka-server-start.sh /opt/kafka/config/server.properties --override broker.id=${HOSTNAME##*-} \
           --override listeners=PLAINTEXT://:9092 \
-          --override zookeeper.connect=zk-0.zk-hs.kafka.svc.cluster.local:2181 \
+          --override zookeeper.connect=zk-0.zk-hs.default.svc.cluster.local:2181 \
           --override log.dir=/var/lib/kafka \
           --override auto.create.topics.enable=true \
           --override auto.leader.rebalance.enable=true \
@@ -180,7 +177,7 @@ spec:
           --override reserved.broker.max.id=1000 "
         env:
         - name: KAFKA_HEAP_OPTS
-          value : "-Xmx128M -Xms512M"
+          value : "-Xmx512M -Xms512M"
         - name: KAFKA_OPTS
           value: "-Dlogging.level=INFO"
         readinessProbe:

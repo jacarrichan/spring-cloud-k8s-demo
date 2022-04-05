@@ -22,6 +22,9 @@ spec:
               value: "http://registry-0.registry-headless.default.svc.cluster.local:8761/eureka,http://registry-1.registry-headless.default.svc.cluster.local:8761/eureka"
             - name: ZIPKIN_SERVICE_URL
               value: "http://zipkin-server:9422"
+            # kubernetes为每个容器配置默认是${namespace}.svc.cluster.local
+            - name: LOG_KAKFA_SERVICE_URL
+              value: "http://kafka-0.kafka-svc.default.svc.cluster.local:9092"
           ports:
             - name: http
               containerPort: 8080
